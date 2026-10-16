@@ -182,5 +182,3 @@ def delete_package():
         delete_days_menu()
     elif option == "3":
         delete_price_menu()
-
-    print("Package/packages deleted successfully!")

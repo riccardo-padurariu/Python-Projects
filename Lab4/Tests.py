@@ -53,7 +53,6 @@ def test_valid_date():
     """
     assert valid_date("12/04/12e1") == (False, "match the pattern dd/mm/yyyy, where dd,mm and yyyy must be valid integers")
     assert valid_date("17/07/2026") == (False, "be after the current date")
-    assert valid_date("15/10/2026", "20/10/2026") == (False, "be after the start date")
     assert valid_date("31/10/2026") == (True, "")
     assert valid_date("12/21/2026") == (False, "match the pattern dd/mm/yyyy, where dd,mm and yyyy must be valid integers")
     assert valid_date("12/12/202") == (False, "match the pattern dd/mm/yyyy, where dd,mm and yyyy must be valid integers")

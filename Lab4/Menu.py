@@ -3,12 +3,10 @@ from AddPackage import add_package
 from ModifyPackage import modify_package
 from DeletePackages import delete_package
 from SearchPackages import search_package
+from PackageReports import generate_reports
+from FilterPackage import filter_packages
 
-def generate_reports():
-    print("generate_reports")
 
-def filter_packages():
-    print("filter_packages")
 
 def undo_operation():
     print("undo_operation")
