@@ -1,24 +1,11 @@
-from PackageClass import packages
-from AddPackage import valid_date
-from SearchPackages import contains
+from crud_business import valid_date
+from package_reports_business import calculate_average, generate_period, calculate_destination
 
-def calculate_destination(packages_list, destination):
-    """
-    Returns the packages that have the same destination as the destination paramater
-    :param packages_list: List[Package]
-    :param destination: str
-    :return: int
-    """
-    counter = 0
-    for package in packages:
-        if package.destination == destination:
-            counter += 1
 
-    return counter
-
-def calculate_destination_menu():
+def calculate_destination_menu(package_list):
     """
     The semi-menu for the destination option
+    :param package_list: PackageList
     :return: None
     """
     print("You selected to calculate the number of tour packages that have a specified destination")
@@ -26,28 +13,15 @@ def calculate_destination_menu():
     while destination == "":
         destination = input("Enter a valid destination: ")
 
-    result = calculate_destination(packages, destination.capitalize())
+    result = calculate_destination(package_list, destination.capitalize())
 
-    print(f"The number of packages with the destination {destination} is {result}")
+    print(f"The number of packages with the destination {destination.capitalize()} is {result}")
 
-def generate_period(packages_list, start_date, finish_date):
-    """
-    Returns a list containing all the packages that respect the period option
-    :param packages_list: List[Package]
-    :param start_date: str
-    :param finish_date: str
-    :return: List[Package] | str
-    """
-    report_list = []
-    for package in packages:
-        if contains(start_date, finish_date, package.start_date, package.end_date):
-            report_list.append(package)
 
-    return report_list if len(report_list) > 0 else "No packages found with the desired period"
-
-def generate_period_menu():
+def generate_period_menu(package_list):
     """
     The semi-menu for the period option
+    :param package_list: PackageList
     :return: None
     """
     print("You selected to generate a report with all the tour packages that are available in a specified period")
@@ -63,7 +37,7 @@ def generate_period_menu():
         finish_date = input(f"The finish date must {feedback}. Please enter again the start date(dd/mm/yyyy): ")
         condition, feedback = valid_date(finish_date)
 
-    report = generate_period(packages, start_date, finish_date)
+    report = generate_period(package_list, start_date, finish_date)
 
     if isinstance(report, str):
         print(report)
@@ -72,25 +46,11 @@ def generate_period_menu():
         for package in report:
             print(package)
 
-def calculate_average(packages_list, destination):
-    """
-    Calculates the average price for all the packages that have the destination parameter
-    :param packages_list: List[Package]
-    :param destination: str
-    :return: float
-    """
-    average = 0
-    counter = 0
-    for package in packages_list:
-        if package.destination == destination:
-            average += package.price
-            counter += 1
 
-    return average / counter if counter > 0 else 0
-
-def calculate_average_menu():
+def calculate_average_menu(package_list):
     """
     The semi-menu for the average option
+    :param package_list: PackageList
     :return: None
     """
     print("You selected to calculate the average orice for a specific destination")
@@ -98,16 +58,17 @@ def calculate_average_menu():
     while destination == "":
         destination = input("Enter a valid destination: ")
 
-    average = calculate_average(packages, destination)
+    average = calculate_average(package_list, destination.capitalize())
     print(f"The average price for the destination {destination} is {average}")
 
-def generate_reports():
+def generate_reports(package_list):
     """
     The main function that implements the functionality of the package reports feature
+    :param package_list: PackageList
     :return: None
 
     """
-    if not packages:
+    if not package_list:
         print("No tour packages available")
         return
 
@@ -124,9 +85,8 @@ def generate_reports():
         option = input("Your option must be an integer between 1 and 3. Please enter again: ")
 
     if option == "1":
-        calculate_destination_menu()
+        calculate_destination_menu(package_list)
     elif option == "2":
-        generate_period_menu()
+        generate_period_menu(package_list)
     elif option == "3":
-        calculate_average_menu()
-
+        calculate_average_menu(package_list)
