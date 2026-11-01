@@ -66,7 +66,6 @@ def generate_reports(package_list):
     The main function that implements the functionality of the package reports feature
     :param package_list: PackageList
     :return: None
-
     """
     if not package_list:
         print("No tour packages available")

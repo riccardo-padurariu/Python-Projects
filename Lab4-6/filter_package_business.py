@@ -1,8 +1,8 @@
 def filter_destination_price(package_list, price, destination):
     """
-    Returns the filtered array of packages that have the same destination as the destination parameter and have the
+    Returns the filtered array of packages that have the same destination as the destination parameter or have the
     price less than or equal to the price parameter
-    :param package_list: List[Package]
+    :param package_list: PackageList
     :param price: int
     :param destination: str
     :return: List[Package]
@@ -19,7 +19,7 @@ def filter_destination_price(package_list, price, destination):
 def filter_month(package_list, month):
     """
     Returns an array with all the packages that don't have in their interval days in the same month as the month parameter
-    :param package_list: List[Package]
+    :param package_list: PackageList
     :param month: str
     :return: List[Package]
     """

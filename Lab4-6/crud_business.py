@@ -121,7 +121,7 @@ def exists_destination(package_list, destination):
     return False
 
 def is_bisect(year):
-    return year % 4 == 0 and (year % 100 == 0 and year % 400 == 0)
+    return (year % 4 == 0 and year % 100 != 0) or (year % 100 == 0 and year % 400 == 0)
 
 def count_days(start, end):
     """
@@ -190,7 +190,7 @@ def delete_price(package_list, price):
     """
     Pops out of the packages_list the packages which have the price greater than the price parameter.
     Returns an array with the remaining packages id's
-    :param package_list: List[Package]
+    :param package_list: PackageList
     :param price: int
     :return: List[str]
     """

@@ -1,19 +1,17 @@
 from domain import Package, PackageList
-from crud_business import delete_destination, count_days, exists_destination, delete_days, valid_date
-from search_packages_business import contains
+from crud_business import delete_destination, count_days, exists_destination, delete_days, valid_date, is_bisect
 
-# Tests for the testable functions
-
-def test_contains():
+def test_is_bisect():
     """
-    Testing the contains() function
+    Testing the is_bisect() function
     :return: None
     """
-    assert contains("12/12/2026","31/12/2026","15/12/2026","20/12/2026") == True
-    assert contains("03/04/2027","12/04/2027","04/04/2027","10/04/2027") == True
-    assert contains("01/02/2027","12/02/2027","10/02/2027","20/02/2027") == False
-    assert contains("03/10/2027","20/10/2027","18/10/2027","25/10/2027") == False
-    assert contains("12/04/2027","18/04/2027","15/04/2027","18/04/2027") == True
+    assert is_bisect(2024) == True
+    assert is_bisect(2022) == False
+    assert is_bisect(2020) == True
+    assert is_bisect(2000) == True
+    assert is_bisect(1997) == False
+    assert is_bisect(2030) == False
 
 def test_count_days():
     """
@@ -162,9 +160,21 @@ def test_valid_date():
     """
     assert valid_date("12/04/12e1") == (False, "match the pattern dd/mm/yyyy, where dd,mm and yyyy must be valid integers")
     assert valid_date("17/07/2026") == (False, "be after the current date")
-    assert valid_date("31/10/2026") == (True, "")
+    assert valid_date("04/11/2026") == (True, "")
     assert valid_date("12/21/2026") == (False, "match the pattern dd/mm/yyyy, where dd,mm and yyyy must be valid integers")
     assert valid_date("12/12/202") == (False, "match the pattern dd/mm/yyyy, where dd,mm and yyyy must be valid integers")
     assert valid_date("/04/2002","12/01/2027") == (False, "match the pattern dd/mm/yyyy, where dd,mm and yyyy must be valid integers")
     assert valid_date("25/12/2026") == (True, "")
     assert valid_date("") == (False, "match the pattern dd/mm/yyyy, where dd,mm and yyyy must be valid integers")
+
+def test_crud():
+    """
+    This function tests the entire crud functionality
+    :return: None
+    """
+    test_is_bisect()
+    test_count_days()
+    test_delete_days()
+    test_delete_destination()
+    test_exists_destination()
+    test_valid_date()

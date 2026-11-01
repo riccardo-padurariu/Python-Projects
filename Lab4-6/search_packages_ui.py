@@ -5,7 +5,7 @@ from search_packages_business import search_interval, search_destination_price, 
 def search_interval_menu(package_list):
     """
     The semi-menu for the search interval option
-    :param package_list: List[Package]
+    :param package_list: PackageList
     :return: None
     """
     print("You selected to search all the tour packages that are taking place in a specific interval of time")
@@ -21,7 +21,7 @@ def search_interval_menu(package_list):
         finish_date = input(f"The finish date must {feedback}. Please enter again the finish date(dd/mm/yyyy): ")
         condition, feedback = valid_date(finish_date, start_date)
 
-    search_result = search_interval(package_list.get_package_list(), start_date, finish_date)
+    search_result = search_interval(package_list, start_date, finish_date)
     if isinstance(search_result, str):
         print(search_result)
     else:
@@ -32,7 +32,7 @@ def search_interval_menu(package_list):
 def search_destination_price_menu(package_list):
     """
     The semi-menu for the search destination and price option
-    :param package_list: List[Package]
+    :param package_list: PackageList
     :return: None
     """
     print("You selected to search all the tour packages with a specific destination and a price within a selected price")
@@ -47,7 +47,7 @@ def search_destination_price_menu(package_list):
         price = input("The price must be a positive integer. Please enter again: ")
     price = int(price)
 
-    search_result = search_destination_price(package_list.get_package_list(), destination, price)
+    search_result = search_destination_price(package_list, destination, price)
     if isinstance(search_result, str):
         print(search_result)
     else:
@@ -58,7 +58,7 @@ def search_destination_price_menu(package_list):
 def search_finish_date_menu(package_list):
     """
     The semi-menu for the search finish date option
-    :param package_list: List[Package]
+    :param package_list: PackageList
     :return: None
     """
     print("You selected to search all the tour packages that have a specified finish date")
@@ -68,7 +68,7 @@ def search_finish_date_menu(package_list):
         finish_date = input(f"The finish date must {feedback}. Please enter again the finish date(dd/mm/yyyy): ")
         condition, feedback = valid_date(finish_date)
 
-    search_result = search_finish_date(package_list.get_package_list(), finish_date)
+    search_result = search_finish_date(package_list, finish_date)
 
     if isinstance(search_result, str):
         print(search_result)
@@ -99,7 +99,6 @@ def search_package(package_list):
     while not option.isdigit() or (option.isdigit() and (int(option) < 1 or int(option) > 3)):
         option = input("Your option must be an integer between 1 and 3. Please enter again: ")
 
-    condition = False
     if option == "1":
         search_interval_menu(package_list)
     elif option == "2":

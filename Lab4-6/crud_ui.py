@@ -1,28 +1,6 @@
 from domain import Package
 from crud_business import get_id, valid_date, exists_destination, delete_destination, delete_days, delete_price
 
-
-def add_package(package_list):
-    """
-    The main function that implements the functionality of the add package feature
-    :param package_list: PackageList
-    :return: None
-    """
-    print("You selected option 1: adding a tour package")
-    exit = input("If you want to go back to the main menu, press 5, else press Enter: ")
-    if exit == "5":
-        return
-    start_date, finish_date, destination, price, id = validate_input()
-    package = Package(start_date, finish_date, destination, price, id)
-    package_list.add_package(package)
-
-    print("The following package was added:")
-    print(package)
-    print("-------------------------------------------")
-    print("The current packages are: ")
-    display_packages(package_list)
-    print("-------------------------------------------")
-
 def validate_input():
     """
     The function that validates the input for the add package feature
@@ -75,7 +53,26 @@ def get_date(status, other_date = None):
 
     return date
 
+def add_package(package_list):
+    """
+    The main function that implements the functionality of the add package feature
+    :param package_list: PackageList
+    :return: None
+    """
+    print("You selected option 1: adding a tour package")
+    exit = input("If you want to go back to the main menu, press 5, else press Enter: ")
+    if exit == "5":
+        return
+    start_date, finish_date, destination, price, id = validate_input()
+    package = Package(start_date, finish_date, destination, price, id)
+    package_list.add_package(package)
 
+    print("The following package was added:")
+    print(package)
+    print("-------------------------------------------")
+    print("The current packages are: ")
+    display_packages(package_list)
+    print("-------------------------------------------")
 
 def display_packages(package_list):
     """
