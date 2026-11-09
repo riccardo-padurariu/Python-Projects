@@ -22,6 +22,7 @@ def parse_commands(package_list, batch):
     for command in batch:
         parse(package_list, command)
 
+# add 20/11/2026 31/11/2026 paris 2500
 
 def parse(package_list, command):
     arguments = command.split()
@@ -30,8 +31,8 @@ def parse(package_list, command):
         case "add": output_messages.append(add_with_command(package_list, arguments))
         case "mod": modify_with_command(package_list, arguments)
         case "del": delete_with_command(package_list, arguments)
-        case "print list": print(package_list.get_package_list())
-        case "print history": print(package_list.get_package_list_history())
+        case "print list": print("plm", package_list.get_package_list())
+        case "print history": print("plm", package_list.get_package_list_history())
         case "-e": exit()
         case "_": print(f"Invalid command: '{" ".join(arguments)}'")
 

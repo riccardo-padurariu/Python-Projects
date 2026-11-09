@@ -10,6 +10,7 @@ class Person:
     Person with the ID {self.person_id}:
         Name: {self.name}
         Address: {self.address}
+        Events: {self.events if self.events else "None"}
     """
 
     def get_person_id(self):

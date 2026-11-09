@@ -14,6 +14,7 @@ class Event:
         Date: {self.date}
         Duration: {self.duration}
         Description: {self.description}
+        Subscribed persons: {self.subscribed_persons if self.subscribed_persons else "None"}
     """
 
     def get_event_id(self):
