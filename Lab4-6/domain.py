@@ -1,3 +1,6 @@
+from idlelib import history
+
+
 class Package():
     def __init__(self,start_date, finish_date, destination, price, id):
         self.start_date = start_date
@@ -146,4 +149,10 @@ class PackageList:
             return True
         return False
 
+    def display_list(self):
+        for package in self.get_package_list():
+            print(package)
 
+    def display_history(self):
+        for package_list in self.get_package_list_history():
+            print(package_list)
