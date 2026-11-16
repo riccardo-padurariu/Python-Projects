@@ -21,8 +21,13 @@ def subscribe_person(entity_list):
 
     event_id = input("\nPlease enter the id of the event you want to subscribe the selected person(enter 'exit' to go back to the main menu): ")
     if event_id == "exit": return
-    while entity_list.get_event_list().get_entity(event_id) is None:
-        event_id = input("The id doesn't exist. Please enter again: ")
+    while (
+        entity_list.get_event_list().get_entity(event_id) is None or
+            (entity_list.get_event_list().get_entity(event_id)
+            and entity_list.get_event_list().get_entity(event_id).exists(person_id)
+            )
+        ):
+        event_id = input("The id doesn't exist or the person is already subscribed in the event selected. Please enter again: ")
         if event_id == "exit": return
 
     selected_event = entity_list.get_event_list().get_entity(event_id)

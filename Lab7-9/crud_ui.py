@@ -1,6 +1,6 @@
-from Domain.person_domain import Person
+from Domain.person import Person
 from crud_business import valid_date
-from Domain.event_domain import Event
+from Domain.event import Event
 from crud_business import get_id
 
 def get_name():
@@ -213,7 +213,7 @@ def delete_event(event_list):
         print("No events to delete")
         return
 
-    print("These are the current persons:")
+    print("These are the current events:")
     event_list.display()
     event_id = input("\nPlease select the id you want to delete: ")
     while event_list.get_entity(event_id) is None:

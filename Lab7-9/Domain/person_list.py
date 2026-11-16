@@ -1,54 +1,31 @@
-class Person:
-    def __init__(self, person_id, name, address):
-        self.person_id = person_id
-        self.name = name
-        self.address = address
-        self.events = []
-
-    def __str__(self):
-        return f"""
-    Person with the ID {self.person_id}:
-        Name: {self.name}
-        Address: {self.address}
-        Events: {self.events if self.events else "None"}
-    """
-
-    def get_person_id(self):
-        return self.person_id
-
-    def get_name(self):
-        return self.name
-
-    def get_address(self):
-        return self.address
-
-    def get_events(self):
-        return self.events
-
-    def set_name(self, new_name):
-        self.name = new_name
-
-    def set_address(self, new_address):
-        self.address = new_address
-
-    def add_event(self, event):
-        self.events.append(event)
+from Domain.person import Person
 
 class PersonList:
+    """
+    The class for the person list entity with the following attributes:
+        person_list: List[Person]
+        person_history: List[List[Person]]
+    """
     def __init__(self):
-        self.person_list = {
+        self.__person_list = {
             "person_list": [],
             "person_history": []
         }
 
+    def get_person_list(self):
+        return self.__person_list["person_list"]
+
+    def get_person_list_history(self):
+        return self.__person_list["person_history"]
+
     def __str__(self):
         return f"""The current persons list state is:
-        List: {self.person_list["person_list"]}
-        History: {self.person_list["person_history"]}
+        List: {self.get_person_list()}
+        History: {self.get_person_list_history()}
     """
 
     def add_person(self, new_person):
-        self.person_list["person_list"].append(new_person)
+        self.get_person_list().append(new_person)
 
     def delete(self, person_id):
         del_index = -1
@@ -56,23 +33,19 @@ class PersonList:
             if person.person_id == person_id:
                 del_index = index
 
-        self.person_list["person_list"].pop(del_index)
+        self.get_person_list().pop(del_index)
 
     def get_entity(self, person_id):
-        for person in self.person_list["person_list"]:
-            if person.person_id == person_id:
+        for person in self.get_person_list():
+            if person.get_person_id() == person_id:
                 return person
 
         return None
 
-    def get_person_list(self):
-        return self.person_list["person_list"]
 
-    def get_person_list_history(self):
-        return self.person_list["person_history"]
 
     def set_person_list(self, new_person_list):
-        self.person_list["person_list"] = new_person_list.copy()
+        self.__person_list["person_list"] = new_person_list.copy()
 
     def exists_id(self, person_id):
         for index, person in enumerate(self.get_person_list()):
@@ -126,11 +99,10 @@ class PersonList:
     def add_event(self, event, person_id):
         condition, index = self.exists_id(person_id)
         if condition:
-            self.person_list["person_list"][index].add_event(event)
+            self.get_person_list()[index].add_event(event)
 
         return condition
 
     def display(self):
         for person in self.get_person_list():
             print(person)
-

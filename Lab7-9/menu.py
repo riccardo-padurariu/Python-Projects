@@ -1,7 +1,13 @@
-from Domain.event_domain import EntityList
+from time import strftime, gmtime
+import random
+from Domain.entity_list import EntityList
 from crud_ui import add_entity, modify_entity, delete_entity
 from search_ui import search_entity
 from subscribe_ui import subscribe_person
+from reports_ui import generate_reports
+from Domain.person import Person
+from Domain.event import Event
+from crud_business import get_id
 
 def exit_app(entity_list):
     print("-------------------------------------------")
@@ -54,13 +60,62 @@ def get_info(entity_list):
     elif option == "2":
         get_event(entity_list.get_event_list())
 
+def generate_rand_date():
+    rand_day = random.randrange(1,31)
+    rand_month = random.randrange(1,12)
+    rand_year = random.randrange(2026, 2035)
+    return f"{rand_day}/{rand_month}/{rand_year}"
+
+def generate_data(entity_list):
+
+    number_of_instances = input("Enter the number of the elements you want to generate: ")
+
+    while not number_of_instances.isdigit():
+        number_of_instances = input("The number of elements must be a positive integer. Please enter again: ")
+
+    number_of_instances = int(number_of_instances)
+    current_day, current_month, current_year = strftime("%d/%m/%Y", gmtime()).split("/")
+    for i in range(number_of_instances):
+        new_person = Person(str(i), f"name{i} surname{i}",f"address{i}")
+        entity_list.add_person(new_person)
+        if i <= number_of_instances // 2:
+            new_event = Event(str(100*i),generate_rand_date(),180+i,f"description{i}")
+            entity_list.add_event(new_event)
+
+    for i in range(number_of_instances):
+        random_person_index = random.randrange(0,number_of_instances-1)
+        random_event_index = random.randrange(0,number_of_instances//2)
+        rand_person = entity_list.get_person_list().get_person_list()[random_person_index]
+        rand_event = entity_list.get_event_list().get_event_list()[random_event_index]
+        if not rand_event.exists(rand_person.get_person_id()):
+            rand_person.add_event(rand_event)
+            rand_event.add_person(rand_person)
+
+    print("Data generated successfully!")
+
+def get_list(entity_list):
+    print("You can get the list for:")
+    print("1. Persons")
+    print("2. Events")
+    option = input("Please enter the entity you want to get the list of:")
+    while option not in ["1", "2"]:
+        option = input("The option must be an integer between 1 and 2. Please enter again: ")
+
+    selected_list = entity_list.get_person_list().get_person_list() if option == "1" else entity_list.get_event_list().get_event_list()
+
+    for element in selected_list:
+        print(element)
+
+
 menu = [(add_entity,"Add a person or an event"),
         (modify_entity,"Modify a person or an event"),
         (delete_entity,"Delete a person or an event"),
         (search_entity,"Search a person or an event"),
         (subscribe_person,"Subscribe a person to an event"),
-        ("","Get reports"),
+        (generate_reports,"Get reports"),
         (get_info,"Get info"),
+        (get_list,"Get list"),
+        (generate_data, "Generate data"),
         (display_state,"Get current app state"),
         (exit_app,"Exit app")]
 
