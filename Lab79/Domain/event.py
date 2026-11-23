@@ -1,5 +1,3 @@
-from Domain.person_list import PersonList
-
 class Event:
     """
     The class for the event entity with the following attributes:
@@ -9,14 +7,14 @@ class Event:
         description: str
         subscribed_person: list[Person]
     """
-    def __init__(self,event_id, date, duration, description):
+    def __init__(self,event_id, date, duration, description, subscribed_persons = None):
         self.__event_id = event_id
         self.__date = date
         self.__duration = duration
         self.__description = description
-        self.__subscribed_persons = []
+        self.__subscribed_persons = [] if not subscribed_persons else subscribed_persons
 
-    def get_event_id(self):
+    def get_id(self):
         return self.__event_id
 
     def get_date(self):
@@ -42,7 +40,7 @@ class Event:
 
     def __str__(self):
         return f"""
-    Event with the ID {self.get_event_id()}:
+    Event with the ID {self.get_id()}:
         Date: {self.get_date()}
         Duration: {self.get_duration()}
         Description: {self.get_description()}
@@ -50,14 +48,14 @@ class Event:
     """
 
     def __repr__(self):
-        return f"Event with ID {self.get_event_id()}, date {self.get_date()}, duration {self.get_duration()}, description {self.get_description()}"
+        return f"Event with ID {self.get_id()}, date {self.get_date()}, duration {self.get_duration()}, description {self.get_description()}"
 
     def add_person(self, person):
         self.get_subscribed_persons().append(person)
 
     def exists(self, person_id):
         for person in self.get_subscribed_persons():
-            if person.get_person_id() == person_id:
+            if person.get_id() == person_id:
                 return True
 
         return False
