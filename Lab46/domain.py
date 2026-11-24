@@ -16,6 +16,9 @@ class Package():
         Price: {self.price}€
         Id: {self.id}"""
 
+    def __repr__(self):
+        return f"Package(id={self.get_id()}, start_date={self.get_start_date()}, finish_date={self.get_finish_date()}, destination={self.get_destination()}, price={self.get_price()})"
+
     def set_start_date(self,date):
         self.start_date = date
 

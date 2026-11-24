@@ -50,9 +50,10 @@ menu = [("Add a tour package", add_package),
         ("Display the current state", display_state),
         ("Exit application", exit_app)]
 
-def display_menu():
+def display_menu(package_list):
     """
     The implementation of the main menu
+    :param package_list: PackageList
     :return: None
     """
     test_crud()
@@ -64,8 +65,6 @@ def display_menu():
     print("---------------------------------")
     print("Welcome to the travel agency app!")
     print("---------------------------------")
-
-    package_list = PackageList()
 
     while True:
         for index, func in enumerate(menu): print(f"Option {index+1}: {func[0]}")

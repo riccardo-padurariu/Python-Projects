@@ -160,7 +160,7 @@ def test_valid_date():
     """
     assert valid_date("12/04/12e1") == (False, "match the pattern dd/mm/yyyy, where dd,mm and yyyy must be valid integers")
     assert valid_date("17/07/2026") == (False, "be after the current date")
-    assert valid_date("04/11/2026") == (True, "")
+    assert valid_date("01/12/2026") == (True, "")
     assert valid_date("12/21/2026") == (False, "match the pattern dd/mm/yyyy, where dd,mm and yyyy must be valid integers")
     assert valid_date("12/12/202") == (False, "match the pattern dd/mm/yyyy, where dd,mm and yyyy must be valid integers")
     assert valid_date("/04/2002","12/01/2027") == (False, "match the pattern dd/mm/yyyy, where dd,mm and yyyy must be valid integers")
